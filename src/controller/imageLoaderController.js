@@ -4,7 +4,7 @@ import ImageView from '../view/imageView.js';
 class ImageLoaderCtrl {
   initialize() {
     return {
-      cube: '../img/cube.jpg',
+      cube: './img/cube.jpg',
       vase: './img/vase.jpg',
     };
   }
