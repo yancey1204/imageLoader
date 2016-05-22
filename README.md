@@ -5,7 +5,7 @@
 
 ## pre request
 Please make sure you already have webpack and http-server installed globally.
-> npm run webpack http-server -g
+> npm run webpack http-server webpack-dev-server -g
 
 ## install
 > npm install
@@ -19,3 +19,6 @@ Please make sure you already have webpack and http-server installed globally.
 ## examine es2015 syntax
 This small program use airbnb linter to check es2015 syntax and standard
 > npm run eslint
+
+## webpack-dev-server
+> npm run hot
