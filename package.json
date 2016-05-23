@@ -6,9 +6,9 @@
   "scripts": {
     "eslint": "eslint src/*.js",
     "build": "webpack -w -d",
-    "start":"npm run eslint && webpack && http-server",
-    "hot" :"webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run eslint && webpack && http-server",
+    "hot": "webpack-dev-server",
+    "test": "mocha --compilers js:babel-register ./test/*/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "babel-loader": "latest",
     "babel-preset-es2015": "latest",
     "babel-register": "latest",
+    "chai-as-promised": "^5.3.0",
     "eslint": "latest",
     "eslint-config-airbnb": "latest",
     "eslint-config-airbnb-base": "latest",
@@ -33,7 +34,9 @@
     "eslint-plugin-jsx-a11y": "latest",
     "eslint-plugin-react": "latest",
     "http-server": "latest",
-    "webpack": "latest"
+    "sinon": "^1.17.4",
+    "webpack": "latest",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "chai": "^3.5.0",

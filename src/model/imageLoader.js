@@ -3,16 +3,16 @@ class ImageLoader {
     this.store = [];
   }
 
-  load(imageObj) {
+  load(imagesObj) {
     let counter = 0;
     let total = 0;
 
     return new Promise((resolve, reject) => {
-      Object.getOwnPropertyNames(imageObj).forEach(imgObj => {
+      Object.getOwnPropertyNames(imagesObj).forEach(imgKey => {
         total ++;
         const img = new Image();
 
-        img.src = imageObj[imgObj];
+        img.src = imagesObj[imgKey];
 
         img.onload = () => {
           counter ++;

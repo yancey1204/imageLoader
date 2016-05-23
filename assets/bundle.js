@@ -101,7 +101,7 @@
 	      var imgView = new _imageView2.default();
 	      var imageObj = this.initialize();
 
-	      Promise.resolve(imgLoader.load(imageObj)).then(function (images) {
+	      imgLoader.load(imageObj).then(function (images) {
 	        images.forEach(function (image) {
 	          imgView.renderImage(image);
 	        });
@@ -139,18 +139,18 @@
 
 	  _createClass(ImageLoader, [{
 	    key: 'load',
-	    value: function load(imageObj) {
+	    value: function load(imagesObj) {
 	      var _this = this;
 
 	      var counter = 0;
 	      var total = 0;
 
 	      return new Promise(function (resolve, reject) {
-	        Object.getOwnPropertyNames(imageObj).forEach(function (imgObj) {
+	        Object.getOwnPropertyNames(imagesObj).forEach(function (imgKey) {
 	          total++;
 	          var img = new Image();
 
-	          img.src = imageObj[imgObj];
+	          img.src = imagesObj[imgKey];
 
 	          img.onload = function () {
 	            counter++;

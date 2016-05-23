@@ -14,7 +14,7 @@ class ImageLoaderCtrl {
     const imgView = new ImageView();
     const imageObj = this.initialize();
 
-    Promise.resolve(imgLoader.load(imageObj))
+    imgLoader.load(imageObj)
       .then(images => {
         images.forEach(image => {
           imgView.renderImage(image);
