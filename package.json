@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "eslint": "./node_modules/eslint/bin/eslint.js",
+    "mocha": "./node_modules/mocha/bin/mocha",
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "webpack-dev-server": "./node_modules/webpack-dev-server/webpack-dev-server.js"
+  },
   "scripts": {
     "eslint": "eslint src/*.js",
-    "build": "webpack -w -d",
-    "start": "npm run eslint && webpack && http-server",
-    "hot": "webpack-dev-server",
+    "watch": "webpack -w -d",
+    "build": "webpack -w && http-server",
+    "start": "npm run eslint && webpack-dev-server --progress --inline --config webpack.babel.js",
     "test": "mocha --compilers js:babel-register ./test/*/*.spec.js"
   },
   "repository": {
@@ -26,7 +32,6 @@
     "babel-loader": "latest",
     "babel-preset-es2015": "latest",
     "babel-register": "latest",
-    "chai-as-promised": "^5.3.0",
     "eslint": "latest",
     "eslint-config-airbnb": "latest",
     "eslint-config-airbnb-base": "latest",

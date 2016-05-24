@@ -54,7 +54,12 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 	  var imgCtrl = new _imageLoaderController2.default();
-	  imgCtrl.loadImage();
+	  var imagesObj = {
+	    cube: './img/cube.jpg',
+	    vase: './img/vase.jpg'
+	  };
+
+	  imgCtrl.load(imagesObj);
 	});
 
 /***/ },
@@ -87,21 +92,17 @@
 	  }
 
 	  _createClass(ImageLoaderCtrl, [{
-	    key: 'initialize',
-	    value: function initialize() {
-	      return {
-	        cube: './img/cube.jpg',
-	        vase: './img/vase.jpg'
-	      };
-	    }
-	  }, {
-	    key: 'loadImage',
-	    value: function loadImage() {
-	      var imgLoader = new _imageLoader2.default();
+	    key: 'load',
+	    value: function load(imagesObj) {
+	      var imagePromises = [];
 	      var imgView = new _imageView2.default();
-	      var imageObj = this.initialize();
+	      var imageModel = new _imageLoader2.default();
 
-	      imgLoader.load(imageObj).then(function (images) {
+	      Object.getOwnPropertyNames(imagesObj).forEach(function (imgKey) {
+	        imagePromises.push(imageModel.getImage(imagesObj[imgKey]));
+	      });
+
+	      Promise.all(imagePromises).then(function (images) {
 	        images.forEach(function (image) {
 	          imgView.renderImage(image);
 	        });
@@ -120,7 +121,7 @@
 /* 2 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -138,32 +139,20 @@
 	  }
 
 	  _createClass(ImageLoader, [{
-	    key: 'load',
-	    value: function load(imagesObj) {
-	      var _this = this;
-
-	      var counter = 0;
-	      var total = 0;
-
+	    key: "getImage",
+	    value: function getImage(src) {
 	      return new Promise(function (resolve, reject) {
-	        Object.getOwnPropertyNames(imagesObj).forEach(function (imgKey) {
-	          total++;
-	          var img = new Image();
+	        var img = new Image();
 
-	          img.src = imagesObj[imgKey];
+	        img.onload = function () {
+	          resolve(img);
+	        };
 
-	          img.onload = function () {
-	            counter++;
-	            _this.store.push(img);
-	            if (counter === total) {
-	              resolve(_this.store);
-	            }
-	          };
+	        img.onerror = function () {
+	          reject(new Error("image load failed: " + src));
+	        };
 
-	          img.onerror = function () {
-	            reject('error');
-	          };
-	        });
+	        img.src = src;
 	      });
 	    }
 	  }]);

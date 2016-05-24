@@ -2,26 +2,22 @@ import ImageLoader from '../model/imageLoader';
 import ImageView from '../view/imageView.js';
 
 class ImageLoaderCtrl {
-  initialize() {
-    return {
-      cube: './img/cube.jpg',
-      vase: './img/vase.jpg',
-    };
-  }
-
-  loadImage() {
-    const imgLoader = new ImageLoader();
+  load(imagesObj) {
+    const imagePromises = [];
     const imgView = new ImageView();
-    const imageObj = this.initialize();
+    const imageModel = new ImageLoader();
 
-    imgLoader.load(imageObj)
-      .then(images => {
-        images.forEach(image => {
-          imgView.renderImage(image);
-        });
-      }, msg => {
-        imgView.renderError(msg);
+    Object.getOwnPropertyNames(imagesObj).forEach(imgKey => {
+      imagePromises.push(imageModel.getImage(imagesObj[imgKey]));
+    });
+
+    Promise.all(imagePromises).then(images => {
+      images.forEach(image => {
+        imgView.renderImage(image);
       });
+    }, msg => {
+      imgView.renderError(msg);
+    });
   }
 }
 

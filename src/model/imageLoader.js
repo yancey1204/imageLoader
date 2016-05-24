@@ -3,29 +3,19 @@ class ImageLoader {
     this.store = [];
   }
 
-  load(imagesObj) {
-    let counter = 0;
-    let total = 0;
-
+  getImage(src) {
     return new Promise((resolve, reject) => {
-      Object.getOwnPropertyNames(imagesObj).forEach(imgKey => {
-        total ++;
-        const img = new Image();
+      const img = new Image();
 
-        img.src = imagesObj[imgKey];
+      img.onload = () => {
+        resolve(img);
+      };
 
-        img.onload = () => {
-          counter ++;
-          this.store.push(img);
-          if (counter === total) {
-            resolve(this.store);
-          }
-        };
+      img.onerror = () => {
+        reject(new Error(`image load failed: ${src}`));
+      };
 
-        img.onerror = () => {
-          reject('error');
-        };
-      });
+      img.src = src;
     });
   }
 }
