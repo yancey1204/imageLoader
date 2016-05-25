@@ -1,32 +1,32 @@
 import { expect } from 'chai';
-import { describe, it, beforeEach } from 'mocha';
+import { describe, it } from 'mocha';
 import ImageLoader from '../../src/model/imageLoader';
+import jsdom from 'mocha-jsdom';
 import sinon from 'sinon';
 
+
 describe('imageloader', () => {
-  let loader;
+  jsdom();
+  it('should return img obj if succeed', () => {
+    const loader = new ImageLoader();
+    const src = '../img/cube.jpg';
+    const progressSpy = sinon.stub(loader, 'getImage');
 
-  beforeEach(() => {
-    loader = new ImageLoader();
+    loader.getImage(src)
+      .then((img) => {
+        console.log(111);
+        console.log(img);
+        expect(img).to.be.an('object');
+        progressSpy.should.have.been.called;
+      }, (err) => {
+        console.log(err);
+      });
   });
+});
 
-  it('should initialize an empty store', () => {
-    expect(loader.store.length).to.be.empty;
-  });
-
-  describe('promise', () => {
-    it('should return img obj if succeed', () => {
-      const src = './img/cube.jpg';
-
-      loader.getImage(src)
-        .then((img) => {
-          console.log(111);
-          console.log(img);
-          expect(img).to.be.an('object');
-        })
-        .catch((msg) => {
-          console.log(msg);
-        });
-    });
+describe('mocha tests', () => {
+  it('has document', () => {
+    const div = document.createElement('div');
+    expect(div.nodeName).eql('DIV');
   });
 });
